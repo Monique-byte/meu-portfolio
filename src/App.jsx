@@ -164,7 +164,8 @@ const App = () => {
                   <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
                     <h2 className="display-5 fw-bold mb-4">Sobre Mim</h2>
                     <p className="about-text">
-                      Do front ao back, gosto de codar em todas as etapas. Curto tanto planejar interfaces com foco em UI/UX design quanto estruturar sistemas organizados, sempre mantendo uma lógica sólida por trás do código.
+                      Do front ao back, gosto de codar em todas as etapas. Curto tanto planejar interfaces com foco em UI/UX design quanto estruturar sistemas organizados, sempre mantendo uma lógica sólida por trás do código. 
+                      Mas o que mais me motiva é planejar e executar projetos. Meu maior desafio até agora foi o projeto de TCC, que tive o orgulho de ser aprovada com 80% da nota.
                     </p>
                   </motion.div>
                 </div>
