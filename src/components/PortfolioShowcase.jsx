@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Code2, ShieldCheck, X, Eye, Award, Calendar } from 'lucide-react';
+import { GraduationCap, Code2, ShieldCheck, X, Eye, Award, Calendar, FileText } from 'lucide-react';
 import ProjectCard from './ProjectCard';
 import './vitrine.css';
 
 // --- COMPONENTE DE CARD DE CERTIFICADO ---
-const CertificateCard = ({ title, issuer, date, image }) => {
+// Adicionado 'thumbnail' nas propriedades para suportar imagem de capa
+const CertificateCard = ({ title, issuer, date, image, thumbnail }) => {
   const [showImage, setShowImage] = useState(false);
+
+  // Lógica para verificar se o arquivo é PDF
+  const isPDF = image?.toLowerCase().endsWith('.pdf');
 
   return (
     <>
@@ -14,12 +18,19 @@ const CertificateCard = ({ title, issuer, date, image }) => {
         className="project-card d-flex flex-column h-100" 
         whileHover={{ y: -5 }}
       >
-        <div className="project-thumbnail" style={{ height: '160px' }}>
-          {image ? (
+        <div className="project-thumbnail" style={{ height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1a1a' }}>
+          {/* Se tiver thumbnail, mostra ela. Se não tiver e for imagem, mostra a imagem. Se for PDF sem thumbnail, mostra ícone */}
+          {thumbnail ? (
+            <img src={thumbnail} alt={title} className="project-img" />
+          ) : image && !isPDF ? (
             <img src={image} alt={title} className="project-img" />
           ) : (
-            <div className="placeholder-overlay">Certificado</div>
+            <div className="text-center text-white-50">
+                <Award size={40} className="mb-2 text-purple-light" />
+                <div style={{ fontSize: '0.8rem' }}>PDF</div>
+            </div>
           )}
+          
           <div className="card-overlay d-flex align-items-center justify-content-center">
              <button onClick={() => setShowImage(true)} className="btn-live">
                 Ver Certificado <Eye size={16} className="ms-2"/>
@@ -52,12 +63,22 @@ const CertificateCard = ({ title, issuer, date, image }) => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               className="position-relative"
-              style={{ zIndex: 1000000, maxWidth: '90%', maxHeight: '90%' }}
+              style={{ zIndex: 1000000, width: isPDF ? '85%' : 'auto', maxWidth: '90%', maxHeight: '90%' }}
             >
               <button className="modal-close-btn" onClick={() => setShowImage(false)}>
                 <X size={20} />
               </button>
-              <img src={image} alt={title} className="img-fluid rounded-4 shadow-lg" style={{ maxHeight: '85vh' }} />
+              
+              {/* Lógica condicional: iframe para PDF ou img para imagem */}
+              {isPDF ? (
+                <iframe 
+                  src={image} 
+                  title={title} 
+                  style={{ width: '100%', height: '85vh', borderRadius: '15px', border: 'none' }} 
+                />
+              ) : (
+                <img src={image} alt={title} className="img-fluid rounded-4 shadow-lg" style={{ maxHeight: '85vh' }} />
+              )}
             </motion.div>
           </div>
         )}
@@ -79,11 +100,14 @@ const PortfolioShowcase = () => {
       image: "/logo datawho.png", 
       linkDemo: "https://seu-tcc.vercel.app",
       details: {
-        journey: `Possui o intuito em oferecer uma solução simples e acessível de Business Intelligence (BI) para micro e pequenas empresas que ainda não possuem maturidade no uso de dados.
+        journey: ` É uma solução simples e acessível de Business Intelligence (BI) para micro e pequenas empresas que ainda não possuem maturidade no uso de dados.
 
 O DataWho permite que o usuário crie seus próprios formulários personalizados por meio de um Form Builder, adaptando a coleta de dados à realidade do seu negócio. Cada formulário gera uma estrutura de dados que é armazenada em tabelas organizadas.
 
-A partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizações gráficas (barras, linhas e pizza). Sistema SaaS completo.`
+A partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizações gráficas (barras, linhas e pizza).
+
+O sistema foi desenvolvido como uma aplicação web no modelo SaaS (Software as a Service).`
+
       }
     },
     { 
@@ -92,9 +116,9 @@ A partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizaç
       description: "Meu espaço profissional para mostrar projetos, ideias, experiências e um pouco sobre mim.", 
       tech: "React.js & Bootstrap", 
       image: "/portfolio.png",
-      linkDemo: "https://monique-trindade.vercel.app",
+      linkDemo: "https://meu-portfolio-4oa3.vercel.app",
       details: {
-        journey: "Este portfólio foi criado para refletir minha identidade como desenvolvedora: criativa, técnica e detalhista, utilizando tecnologias modernas como Framer Motion.",
+        journey: "Este portfólio foi criado para refletir minha identidade como desenvolvedora, reunindo não só projetos, mas também minha evolução, aprendizados e a forma como gosto de transformar ideias em soluções reais. Cada detalhe foi pensado para mostrar quem eu sou, como penso e como encaro desafios dentro da tecnologia.",
       }
     },
     { 
@@ -104,27 +128,36 @@ A partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizaç
       tech: "React Native", 
       image: "/PETMACH.png",
       details: {
-        journey: "Desenvolvimento mobile focado em impacto social, estruturando a conexão entre ONGs e adotantes de forma intuitiva.",
+        journey: `O PetMath é um aplicativo móvel que conecta abrigos de animais a potenciais adotantes. O sistema permite que os usuários naveguem por perfis de animais disponíveis para adoção, visualizem fotos, informações e histórico de saúde, e entrem em contato diretamente com os abrigos para iniciar o processo de adoção. O objetivo do PetMath é facilitar a adoção responsável, promovendo o bem-estar animal e ajudando a encontrar lares amorosos para pets necessitados.`
       }
     }
   ];
 
-  // ADICIONE SEUS CERTIFICADOS AQUI
-  const myCertificates = [
+   const myCertificates = [
     { 
       id: 1, 
-      title: "UI/UX Design", 
+      title: "Power BI Analyst", 
       issuer: "DIO.me", 
-      date: "2024", 
-      image: "/certificado-ads.png" 
+      date: "2025", 
+      image: "/BI.pdf",         
+      thumbnail: "/capa_bi.png" 
     },
     { 
       id: 2, 
-      title: "Full Stack Web Development", 
-      issuer: "Udemy / Alura", 
-      date: "2023", 
-      image: "/certificado-fullstack.png" 
+      title: "Formação UX Designer", 
+      issuer: "DIO.me", 
+      date: "2024", 
+      image: "/UX.pdf",
+      thumbnail: "/capa_ux.png"
     },
+   { 
+      id: 3, 
+      title: "Python", 
+      issuer: "DIO.me", 
+      date: "2024", 
+      image: "/python.pdf",
+      thumbnail: "/capa_python.png"
+    }
   ];
 
   const skills = ["HTML", "CSS", "JavaScript", "React.js", "Node.js", "Express.js", "SCRUM", "KANBAN", "SQL", "MongoDB", "Bootstrap", "React Native", "Python", "Git", "UI/UX ", "JWT"];
@@ -175,14 +208,12 @@ A partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizaç
           transition={{ duration: 0.3 }}
           className="row g-4"
         >
-          {/* ABA PROJETOS */}
           {activeTab === 'projects' && myProjects.map(p => (
             <div key={p.id} className="col-lg-4 col-md-6">
               <ProjectCard {...p} />
             </div>
           ))}
 
-          {/* ABA TECNOLOGIAS */}
           {activeTab === 'tech-stack' && (
             <div className="col-12 d-flex flex-wrap justify-content-center gap-3">
               {skills.map((s, index) => (
@@ -199,7 +230,6 @@ A partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizaç
             </div>
           )}
 
-          {/* ABA CERTIFICADOS ATUALIZADA */}
           {activeTab === 'certificates' && myCertificates.map(c => (
             <div key={c.id} className="col-lg-4 col-md-6">
               <CertificateCard {...c} />
