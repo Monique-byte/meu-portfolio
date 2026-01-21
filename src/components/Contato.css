@@ -1,0 +1,149 @@
+/* contato.css */
+
+.contact-section {
+    padding-top: 120px;
+    padding-bottom: 100px;
+}
+
+.badge-contact {
+    background: rgba(108, 92, 231, 0.1);
+    color: var(--purple-light);
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Cards de Informação */
+.contact-glass-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.contact-glass-card:hover {
+    border-color: var(--purple-main);
+    transform: translateX(10px);
+}
+
+.icon-box {
+    width: 50px;
+    height: 50px;
+    background: var(--purple-main);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 8px 15px rgba(108, 92, 231, 0.3);
+}
+
+.contact-glass-card h5 {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+.contact-glass-card p {
+    margin: 0;
+    font-weight: 600;
+    color: white;
+}
+
+/* Grid Social */
+.social-grid-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.social-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.social-pill:hover {
+    background: var(--purple-main);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* Formulário Profissional */
+.form-glass-container {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 40px;
+    border-radius: 30px;
+    backdrop-filter: blur(15px);
+}
+
+.input-group-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group-custom label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 5px;
+}
+
+.input-group-custom input, 
+.input-group-custom textarea {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    padding: 12px 20px;
+    border-radius: 15px;
+    color: white;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group-custom input:focus, 
+.input-group-custom textarea:focus {
+    border-color: var(--purple-main);
+    background: rgba(108, 92, 231, 0.05);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.1);
+}
+
+.btn-submit-contact {
+    background: var(--purple-main);
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 15px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-submit-contact:hover {
+    background: var(--purple-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+}
+
+@media (max-width: 768px) {
+    .form-glass-container {
+        padding: 25px;
+    }
+}
