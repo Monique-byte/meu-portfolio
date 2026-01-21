@@ -1,93 +1,149 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Code2, ShieldCheck, X, Eye, Award, Calendar, FileText } from 'lucide-react';
-import ProjectCard from './ProjectCard';
+import { X, ExternalLink, Eye, Award, Calendar, Code2, ShieldCheck, GraduationCap } from 'lucide-react';
 import './vitrine.css';
 
-// --- COMPONENTE DE CARD DE CERTIFICADO ---
-// Adicionado 'thumbnail' nas propriedades para suportar imagem de capa
+const ModalPortal = ({ children, isOpen }) => {
+  if (typeof document === 'undefined') return null;
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && children}
+    </AnimatePresence>,
+    document.body
+  );
+};
+
 const CertificateCard = ({ title, issuer, date, image, thumbnail }) => {
   const [showImage, setShowImage] = useState(false);
-
-  // Lógica para verificar se o arquivo é PDF
   const isPDF = image?.toLowerCase().endsWith('.pdf');
+
+  useEffect(() => {
+    document.body.style.overflow = showImage ? 'hidden' : 'unset';
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [showImage]);
 
   return (
     <>
-      <motion.div 
-        className="project-card d-flex flex-column h-100" 
-        whileHover={{ y: -5 }}
-      >
-        <div className="project-thumbnail" style={{ height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1a1a' }}>
-          {/* Se tiver thumbnail, mostra ela. Se não tiver e for imagem, mostra a imagem. Se for PDF sem thumbnail, mostra ícone */}
-          {thumbnail ? (
-            <img src={thumbnail} alt={title} className="project-img" />
-          ) : image && !isPDF ? (
-            <img src={image} alt={title} className="project-img" />
-          ) : (
-            <div className="text-center text-white-50">
-                <Award size={40} className="mb-2 text-purple-light" />
-                <div style={{ fontSize: '0.8rem' }}>PDF</div>
+      <motion.div className="project-card d-flex flex-column h-100" whileHover={{ y: -5, scale: 1.01 }}>
+        <div className="project-thumbnail">
+          {thumbnail ? <img src={thumbnail} alt={title} className="project-img" /> : (
+            <div className="placeholder-content">
+              <Award size={40} className="mb-2 text-purple-light" />
+              <div style={{ fontSize: '0.8rem' }}>DOCUMENTO</div>
             </div>
           )}
-          
-          <div className="card-overlay d-flex align-items-center justify-content-center">
+          <div className="card-overlay">
              <button onClick={() => setShowImage(true)} className="btn-live">
                 Ver Certificado <Eye size={16} className="ms-2"/>
              </button>
           </div>
         </div>
-        
-        <div className="p-3 d-flex flex-column flex-grow-1 card-body-glass">
+        <div className="p-3 d-flex flex-column flex-grow-1 card-body-glass text-start">
           <div className="d-flex align-items-center gap-2 mb-2 text-purple-light">
-             <Award size={16} />
+             <Award size={16} /> 
              <span className="fw-bold small text-uppercase" style={{ fontSize: '0.7rem' }}>{issuer}</span>
           </div>
-          <h6 className="fw-bold mb-2 text-white" style={{ fontSize: '0.95rem' }}>{title}</h6>
+          <h6 className="fw-bold mb-2 text-white">{title}</h6>
           <div className="mt-auto d-flex align-items-center gap-2 text-white-50" style={{ fontSize: '0.75rem' }}>
-             <Calendar size={14} />
-             <span>{date}</span>
+             <Calendar size={14} /> <span>{date}</span>
           </div>
         </div>
       </motion.div>
 
-      <AnimatePresence>
-        {showImage && (
-          <div className="modal-fixed-container">
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setShowImage(false)} className="modal-backdrop"
-            />
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="position-relative"
-              style={{ zIndex: 1000000, width: isPDF ? '85%' : 'auto', maxWidth: '90%', maxHeight: '90%' }}
-            >
-              <button className="modal-close-btn" onClick={() => setShowImage(false)}>
-                <X size={20} />
-              </button>
-              
-              {/* Lógica condicional: iframe para PDF ou img para imagem */}
-              {isPDF ? (
-                <iframe 
-                  src={image} 
-                  title={title} 
-                  style={{ width: '100%', height: '85vh', borderRadius: '15px', border: 'none' }} 
-                />
-              ) : (
-                <img src={image} alt={title} className="img-fluid rounded-4 shadow-lg" style={{ maxHeight: '85vh' }} />
-              )}
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <ModalPortal isOpen={showImage}>
+        <div className="modal-fixed-container">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowImage(false)} className="modal-backdrop" />
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="modal-glass-content modal-cert-size">
+            <button className="modal-close-btn" onClick={() => setShowImage(false)}><X size={20} /></button>
+            {/* Centralização do Certificado */}
+            <div className="modal-inner-scroll d-flex align-items-center justify-content-center">
+                {isPDF ? (
+                <iframe src={image} title={title} className="cert-iframe" />
+                ) : (
+                <img src={image} alt={title} className="img-fluid rounded-4 shadow-lg modal-main-img" />
+                )}
+            </div>
+          </motion.div>
+        </div>
+      </ModalPortal>
     </>
   );
 };
 
-// --- COMPONENTE PRINCIPAL ---
+const ProjectCard = ({ title, description, tech, linkDemo, image, details }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
+  return (
+    <>
+      <motion.div className="project-card d-flex flex-column h-100" whileHover={{ y: -8, scale: 1.01 }}>
+        <div className="project-thumbnail">
+          {image ? (
+            <img src={image} alt={title} className="project-img" />
+          ) : (
+            <div className="placeholder-content">Preview</div>
+          )}
+          <div className="card-overlay">
+             <button onClick={() => setIsOpen(true)} className="btn-live">Ver Detalhes</button>
+          </div>
+        </div>
+        <div className="p-3 d-flex flex-column flex-grow-1 card-body-glass text-start">
+          <h4 className="fw-bold mb-1 title-gradient">{title}</h4>
+          <p className="text-white-50 small mb-3">{description}</p>
+          <div className="mt-auto">
+            <span className="badge tech-badge mb-3 d-inline-block">{tech}</span>
+            <div className="d-flex justify-content-between align-items-center mt-2">
+              <button onClick={() => setIsOpen(true)} className="btn btn-sm text-white-50 p-0 btn-details">Mais detalhes +</button>
+              {linkDemo && (
+                <a href={linkDemo} target="_blank" rel="noreferrer" className="btn-live-sm text-decoration-none">Acessar</a>
+              )}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      <ModalPortal isOpen={isOpen}>
+        <div className="modal-fixed-container">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsOpen(false)} className="modal-backdrop" />
+          <motion.div initial={{ opacity: 0, scale: 0.9, y: 50 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 50 }} className="modal-glass-content">
+            <button className="modal-close-btn" onClick={() => setIsOpen(false)}><X size={20} /></button>
+            <div className="modal-inner-scroll">
+              {/* Ajustado para align-items-center para centralizar verticalmente imagem e texto */}
+              <div className="row g-4 align-items-center justify-content-center">
+                <div className="col-lg-5 text-center">
+                  <img src={image} alt={title} className="modal-main-img shadow-lg" />
+                  <div className="mt-3 d-flex flex-wrap justify-content-center gap-2">
+                    <span className="badge tech-badge">{tech}</span>
+                  </div>
+                  {linkDemo && (
+                    <a href={linkDemo} target="_blank" rel="noreferrer" className="btn-live w-100 mt-4 text-center text-decoration-none d-block">
+                        Acessar Projeto <ExternalLink size={14} className="ms-1" />
+                    </a>
+                  )}
+                </div>
+                <div className="col-lg-7 text-start">
+                  <h2 className="fw-bold title-gradient mb-3">{title}</h2>
+                  <div className="story-section">
+                    <div className="d-flex align-items-center gap-2 mb-2 text-purple-light">
+                      <span className="fw-bold small text-uppercase">Sobre o Projeto</span>
+                    </div>
+                    <p className="modal-text-description m-0">{details?.journey}</p>
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </ModalPortal>
+    </>
+  );
+};
+
 const PortfolioShowcase = () => {
   const [activeTab, setActiveTab] = useState('projects');
 
@@ -98,16 +154,9 @@ const PortfolioShowcase = () => {
       description: "Sistema denominado DataWho desenvolvido para conclusão da graduação em ADS.", 
       tech: "React.js, Node.js, Express.js, MongoDB & JWT", 
       image: "/logo datawho.png", 
-      linkDemo: "https://seu-tcc.vercel.app",
+      linkDemo: "https://github.com/Monique-byte",
       details: {
-        journey: ` É uma solução simples e acessível de Business Intelligence (BI) para micro e pequenas empresas que ainda não possuem maturidade no uso de dados.
-
-O DataWho permite que o usuário crie seus próprios formulários personalizados por meio de um Form Builder, adaptando a coleta de dados à realidade do seu negócio. Cada formulário gera uma estrutura de dados que é armazenada em tabelas organizadas.
-
-A partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizações gráficas (barras, linhas e pizza).
-
-O sistema foi desenvolvido como uma aplicação web no modelo SaaS (Software as a Service).`
-
+        journey: ` É uma solução simples e acessível de Business Intelligence (BI) para micro e pequenas empresas que ainda não possuem maturidade no uso de dados.\n\nO DataWho permite que o usuário crie seus próprios formulários personalizados por meio de um Form Builder, adaptando a coleta de dados à realidade do seu negócio. Cada formulário gera uma estrutura de dados que é armazenada em tabelas organizadas.\n\nA partir dessas tabelas, o usuário pode selecionar os dados e gerar visualizações gráficas (barras, linhas e pizza).\n\nO sistema foi desenvolvido como uma aplicação web no modelo SaaS (Software as a Service).`
       }
     },
     { 
@@ -133,110 +182,59 @@ O sistema foi desenvolvido como uma aplicação web no modelo SaaS (Software as 
     }
   ];
 
-   const myCertificates = [
-    { 
-      id: 1, 
-      title: "Power BI Analyst", 
-      issuer: "DIO.me", 
-      date: "2025", 
-      image: "/BI.pdf",         
-      thumbnail: "/capa_bi.png" 
-    },
-    { 
-      id: 2, 
-      title: "Formação UX Designer", 
-      issuer: "DIO.me", 
-      date: "2024", 
-      image: "/UX.pdf",
-      thumbnail: "/capa_ux.png"
-    },
-   { 
-      id: 3, 
-      title: "Python", 
-      issuer: "DIO.me", 
-      date: "2024", 
-      image: "/python.pdf",
-      thumbnail: "/capa_python.png"
-    }
+  const myCertificates = [
+    { id: 1, title: "Power BI Analyst", issuer: "DIO.me", date: "2025", image: "/BI.pdf", thumbnail: "/capa_bi.png" },
+    { id: 2, title: "Formação UX Designer", issuer: "DIO.me", date: "2024", image: "/UX.pdf", thumbnail: "/capa_ux.png" },
+    { id: 3, title: "Python", issuer: "DIO.me", date: "2024", image: "/python.pdf", thumbnail: "/capa_python.png" }
   ];
 
-  const skills = ["HTML", "CSS", "JavaScript", "React.js", "Node.js", "Express.js", "SCRUM", "KANBAN", "SQL", "MongoDB", "Bootstrap", "React Native", "Python", "Git", "UI/UX ", "JWT"];
+  const skills = ["HTML", "CSS", "JavaScript", "React.js", "Node.js", "Express.js", "SCRUM", "KANBAN", "SQL", "MongoDB", "Bootstrap", "React Native", "Python", "Git", "UI/UX", "JWT"];
 
   return (
     <section id="portfolio" className="portfolio-section container">
       <div className="text-center mb-5">
-        <motion.h2 
-          initial={{ opacity: 0, y: -20 }} 
-          whileInView={{ opacity: 1, y: 0 }}
-          className="display-4 fw-bold main-title"
-        >
-          Vitrine do Portfólio
-        </motion.h2>
+        <motion.h2 initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} className="display-4 fw-bold main-title">Vitrine do Portfólio</motion.h2>
         <p className="text-white-50">Conheça meus projetos e especializações.</p>
       </div>
 
-      <div className="tabs-container d-flex justify-content-center gap-3 mb-5 flex-wrap">
+      <div className="tabs-container d-flex justify-content-center gap-2 mb-5 flex-wrap">
         {[
           {id: 'projects', label: 'Projetos', icon: <Code2 size={18}/>}, 
           {id: 'certificates', label: 'Certificados', icon: <ShieldCheck size={18}/>}, 
           {id: 'tech-stack', label: 'Tecnologias', icon: <GraduationCap size={18}/>}
         ].map(tab => (
-          <button 
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
-            style={{ position: 'relative' }}
-          >
-            <span className="tab-content">{tab.icon} {tab.label}</span>
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`tab-button ${activeTab === tab.id ? 'active' : ''}`} style={{ position: 'relative' }}>
+            <span style={{ position: 'relative', zIndex: 2 }}>{tab.icon} <span className="d-none d-sm-inline ms-1">{tab.label}</span></span>
             {activeTab === tab.id && (
-              <motion.div 
-                layoutId="activeTab"
-                className="active-bg"
-                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-              />
+              <motion.div layoutId="activeTab" className="active-bg" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />
             )}
           </button>
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div 
-          key={activeTab}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.3 }}
-          className="row g-4"
-        >
+      <div className="row g-4">
+        <AnimatePresence mode="wait">
           {activeTab === 'projects' && myProjects.map(p => (
-            <div key={p.id} className="col-lg-4 col-md-6">
+            <motion.div key={p.id} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="col-lg-4 col-md-6">
               <ProjectCard {...p} />
-            </div>
+            </motion.div>
+          ))}
+          
+          {activeTab === 'certificates' && myCertificates.map(c => (
+            <motion.div key={c.id} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="col-lg-4 col-md-6">
+              <CertificateCard {...c} />
+            </motion.div>
           ))}
 
           {activeTab === 'tech-stack' && (
-            <div className="col-12 d-flex flex-wrap justify-content-center gap-3">
-              {skills.map((s, index) => (
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  key={s} 
-                  className="tech-tag-large"
-                >
-                  {s}
-                </motion.div>
+            <motion.div key="tech" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="col-12 d-flex flex-wrap justify-content-center gap-3">
+              {skills.map((s, idx) => (
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: idx * 0.03 }} key={s} className="tech-tag-large">{s}</motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
-
-          {activeTab === 'certificates' && myCertificates.map(c => (
-            <div key={c.id} className="col-lg-4 col-md-6">
-              <CertificateCard {...c} />
-            </div>
-          ))}
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </section>
   );
 };

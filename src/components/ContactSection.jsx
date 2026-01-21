@@ -78,12 +78,11 @@ const ContactSection = () => {
             </div>
 
             <div className="social-grid-card">
-              <p className="small text-white-50 mb-3 fw-bold">REDES PROFISSIONAIS</p>
-              <div className="d-flex gap-3">
-                <a href="#" className="social-pill"><Github size={20} /> Github</a>
-                <a href="#" className="social-pill"><Linkedin size={20} /> LinkedIn</a>
-                <a href="#" className="social-pill"><Instagram size={20} /> Instagram</a>
-              </div>
+            <p className="small text-white-50 mb-3 fw-bold title-social">REDES PROFISSIONAIS</p>
+            <div className="social-pills-container"> {/* Alterado de d-flex gap-3 para esta classe */}
+                <a href="https://github.com/Monique-byte" target='_blank' rel='noopener noreferrer' className="social-pill"><Github size={20} /> Github </a> 
+                <a href="https://linkedin.com/in/moniquetrindade" target='_blank' rel='noopener noreferrer' className="social-pill"><Linkedin size={20} /> LinkedIn</a>
+            </div>
             </div>
           </motion.div>
         </div>

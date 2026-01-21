@@ -55,12 +55,18 @@
     color: white;
 }
 
-/* Grid Social */
+/* --- GRID SOCIAL (AJUSTADO PARA RESPONSIVIDADE) --- */
 .social-grid-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--glass-border);
     padding: 25px;
     border-radius: 20px;
+}
+
+/* Esta é a div que envolve os links no seu JSX */
+.social-grid-card .d-flex {
+    flex-wrap: wrap; /* Permite que os botões pulem linha no celular */
+    gap: 12px !important; /* Espaço entre as pílulas */
 }
 
 .social-pill {
@@ -73,8 +79,10 @@
     font-size: 0.85rem;
     display: flex;
     align-items: center;
+    margin-bottom: 12px;
     gap: 8px;
     transition: 0.3s;
+    white-space: nowrap; /* Impede que o texto quebre dentro da pílula */
 }
 
 .social-pill:hover {
@@ -83,7 +91,7 @@
     transform: translateY(-3px);
 }
 
-/* Formulário Profissional */
+/* --- FORMULÁRIO PROFISSIONAL --- */
 .form-glass-container {
     background: var(--glass);
     border: 1px solid var(--glass-border);
@@ -142,8 +150,42 @@
     box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
 }
 
+/* --- VERSÃO MOBILE (AJUSTES FINAIS) --- */
 @media (max-width: 768px) {
+    .contact-section {
+        padding-top: 80px;
+    }
+
+    /* Centraliza tudo no card de info */
+    .contact-glass-card {
+        text-align: center;
+    }
+    
+    .contact-glass-card .d-flex {
+        flex-direction: column; /* Ícone em cima do texto */
+        justify-content: center;
+    }
+
+    .contact-glass-card:hover {
+        transform: translateY(-5px); /* Move para cima em vez de para o lado no mobile */
+    }
+
+    /* Centraliza as redes sociais */
+    .social-grid-card {
+        text-align: center;
+    }
+
+    .social-grid-card .d-flex {
+        justify-content: center; /* Centraliza as pílulas */
+    }
+
     .form-glass-container {
         padding: 25px;
+        margin-top: 20px;
+    }
+
+    .btn-submit-contact {
+        width: 100%; /* Botão ocupa a largura toda no celular */
+        justify-content: center;
     }
 }
