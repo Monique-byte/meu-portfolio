@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Github, Linkedin, Laptop, ChevronDown } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react'; // Já estava aqui
 import './App.css';
 
 import PortfolioShowcase from './components/PortfolioShowcase';
@@ -17,7 +16,6 @@ const App = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  // Definição clara das seções para evitar erros de digitação
   const navItems = [
     { label: 'Home', id: 'home' },
     { label: 'Sobre', id: 'about' },
@@ -27,13 +25,9 @@ const App = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Efeito de transparência da Navbar
       setScrolled(window.scrollY > 50);
 
-      // --- Lógica de Scroll Spy ---
       const scrollPosition = window.scrollY + (window.innerHeight / 3);
-      
-      // Verifica se o usuário chegou ao fim da página
       const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50;
 
       if (isAtBottom) {
@@ -66,8 +60,10 @@ const App = () => {
   };
 
   return (
-    <>
     <div className="main-layout">
+      {/* 1. Componente de Analytics inserido para rastrear as visitas */}
+      <Analytics /> 
+
       {!loading && <motion.div className="progress-bar" style={{ scaleX }} />}
 
       <AnimatePresence mode="wait">
@@ -151,7 +147,7 @@ const App = () => {
               </motion.div>
             </section>
             
-            {/* SEÇÃO SOBRE (ID: about) */}
+            {/* SEÇÃO SOBRE */}
             <section id="about" className="container py-80">
               <div className="row align-items-center">
                 <div className="col-lg-3 col-md-12 text-center mb-5 mb-lg-0">
@@ -165,7 +161,7 @@ const App = () => {
                 <div className="col-lg-4 col-md-12 mb-5 mb-lg-0">
                   <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
                     <h2 className="display-5 fw-bold mb-4">Sobre Mim</h2>
-                    <p className="about-text">
+                   <p className="about-text">
                       Do front ao back, gosto de codar em todas as etapas. Curto tanto planejar interfaces com foco em UI/UX design quanto estruturar sistemas organizados, sempre mantendo uma lógica sólida por trás do código. 
                       Mas o que mais me motiva é planejar e executar projetos. Meu maior desafio até agora foi o projeto de TCC, que tive o orgulho de ser aprovada com 80% da nota.
                     </p>
@@ -200,12 +196,10 @@ const App = () => {
               </div>
             </section>
 
-            {/* SEÇÃO VITRINE */}
             <section id="vitrine">
               <PortfolioShowcase />
             </section>
 
-            {/* SEÇÃO CONTATO */}
             <section id="contato">
               <ContactSection />
             </section>
@@ -218,9 +212,6 @@ const App = () => {
         )}
       </AnimatePresence>
     </div>
-     <SuaContactSection />
-      <Analytics /> 
-      </>
   );
 };
 
