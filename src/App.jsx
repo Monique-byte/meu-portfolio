@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Github, Linkedin, Laptop, ChevronDown } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 
 import PortfolioShowcase from './components/PortfolioShowcase';
@@ -65,6 +66,7 @@ const App = () => {
   };
 
   return (
+    <>
     <div className="main-layout">
       {!loading && <motion.div className="progress-bar" style={{ scaleX }} />}
 
@@ -216,6 +218,9 @@ const App = () => {
         )}
       </AnimatePresence>
     </div>
+     <SuaContactSection />
+      <Analytics /> 
+      </>
   );
 };
 
