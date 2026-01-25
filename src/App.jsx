@@ -113,7 +113,7 @@ const App = () => {
                 <div className="col-lg-7">
                   <motion.div variants={itemVariants}>
                     <div className="badge-ready">✨ Formada em Análise e Desenvolvimento de Sistemas </div>
-                    <h1 className="display-1">Desenvolvedora <br /> <span className="text-gradient">Full-Stack Júnior</span></h1>
+                    <h1 className="display-1">Desenvolvedora <br /> <span className="text-gradient">Full-Stack</span></h1>
                     <p className="hero-subtitle">
                       Opa, tudo bem? Me chamo Monique, tenho 21 anos e se a curiosidade sobre mim te trouxe até aqui, vale dizer que sou apaixonada por tecnologia... mas mais por café. ☕💻
                     </p>
