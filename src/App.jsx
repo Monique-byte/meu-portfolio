@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Analytics } from '@vercel/analytics/react'; // Já estava aqui
 import './App.css';
 
-import PortfolioShowcase from './components/PortfolioShowcase';
-import ContactSection from './components/ContactSection';
+import PortfolioShowcase from './layouts/PortfolioShowcase';
+import ContactSection from './layouts/ContactSection';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -153,7 +153,7 @@ const App = () => {
                 <div className="col-lg-3 col-md-12 text-center mb-5 mb-lg-0">
                   <motion.div whileInView={{ scale: [0.9, 1], opacity: [0, 1] }} viewport={{ once: true }}>
                     <div className="photo-container">
-                      <img src="/eu.jpeg" alt="Monique Trindade" className="about-photo-round" />
+                      <img src="/eu.jpeg" alt="Monique Trindade" loading="eager"  fetchpriority="high" className="about-photo-round" />
                       <div className="photo-glow"></div>
                     </div>
                   </motion.div>

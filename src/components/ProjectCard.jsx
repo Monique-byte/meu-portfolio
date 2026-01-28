@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Rocket, Target, Cpu } from 'lucide-react';
-import './vitrine.css';
+import '../styles/vitrine.css';
 
 const ProjectCard = ({ title, description, tech, linkDemo, image, details }) => {
   const [isOpen, setIsOpen] = useState(false);

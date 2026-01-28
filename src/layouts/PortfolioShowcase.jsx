@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Eye, Award, Calendar, Code2, ShieldCheck, GraduationCap } from 'lucide-react';
-import './vitrine.css';
+import '../styles/vitrine.css';
 
 const ModalPortal = ({ children, isOpen }) => {
   if (typeof document === 'undefined') return null;

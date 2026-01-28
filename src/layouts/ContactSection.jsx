@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, Github, Linkedin, Instagram, MessageSquare } from 'lucide-react';
 import emailjs from '@emailjs/browser'; // Importação do EmailJS
-import './Contato.css';
+import '../styles/Contato.css';
 
 const ContactSection = () => {
   // 1. Estado para armazenar os dados do formulário

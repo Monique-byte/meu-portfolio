@@ -1,6 +1,4 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-
 /* --- CONFIGURAÇÕES GLOBAIS --- */
 :root {
   --bg-dark: #050510;
@@ -13,10 +11,6 @@
   scroll-behavior: smooth;
 }
 
-/* 
-   FIX PARA O PULO DE SEÇÃO: 
-   Garante que quando você clicar no menu, a seção pare 100px abaixo do topo (altura da navbar)
-*/
 html {
   scroll-padding-top: 100px; 
 }
@@ -27,32 +21,31 @@ body {
   margin: 0; padding: 0;
   background-color: var(--bg-dark);
   color: white;
+  /* font-display: swap já foi definido no link do HTML */
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   width: 100%;
+  /* Melhora a renderização do texto */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- ESPAÇAMENTO ENTRE SEÇÕES (SOLUÇÃO DA DISTÂNCIA) --- */
+/* --- ESPAÇAMENTO ENTRE SEÇÕES --- */
 section {
   position: relative;
-  /* Garante que seções curtas ocupem espaço suficiente para o Scroll Spy detectar */
   min-height: 80vh; 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 100px 0; /* Aumenta a distância entre uma seção e outra */
+  padding: 80px 0; /* Padronizado para evitar saltos visuais */
 }
 
-/* Ajuste específico para tirar o excesso de padding da Home que já tem vh-100 */
-#home {
-  padding: 0;
-  min-height: 100vh;
-}
-
+#home { padding: 0; min-height: 100vh; }
 #about { padding-bottom: 100px; }
-#vitrine { padding: 0px 0; } /* Muita distância entre Sobre e Vitrine */
+#vitrine { padding: 40px 0; } 
 #contato { padding-top: 80px; min-height: 90vh; }
 
+/* Correção para evitar barras de rolagem horizontais fantasmas */
 .row {
     margin-right: 0;
     margin-left: 0;
@@ -64,6 +57,8 @@ section {
   width: 100%;
   position: relative;
   background-color: var(--bg-dark);
+  /* background-attachment: fixed pode pesar em celulares, 
+     mas para portfólio de dev costuma ser aceitável. */
   background-image: 
     radial-gradient(at 0% 0%, rgba(108, 92, 231, 0.15) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(0, 210, 255, 0.07) 0px, transparent 50%),
@@ -263,12 +258,15 @@ section {
 /* --- SEÇÃO SOBRE MIM (ABOUT) --- */
 .photo-container { position: relative; display: inline-block; }
 
+/* DICA DE PERFORMANCE NA FOTO DO SOBRE MIM */
 .about-photo-round {
   width: 200px; height: 200px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--purple-main);
   box-shadow: 0 0 20px var(--purple-glow);
+  /* Adicione isto para avisar o navegador que a imagem vai mudar de tamanho */
+  will-change: transform;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
