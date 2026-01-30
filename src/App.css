@@ -28,29 +28,83 @@ body {
   /* Melhora a renderização do texto */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+}/* --- LIMPEZA E UNIÃO DE REGRAS DE ESPAÇAMENTO --- */
 
-/* --- ESPAÇAMENTO ENTRE SEÇÕES --- */
+/* 1. Regra Geral: Espaço equilibrado para Desktop */
 section {
   position: relative;
-  min-height: 80vh; 
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 0; /* Padronizado para evitar saltos visuais */
+  padding: 70px 0 !important; 
+  min-height: auto;
 }
 
-#home { padding: 0; min-height: 100vh; }
-#about { padding-bottom: 100px; }
-#vitrine { padding: 40px 0; } 
-#contato { padding-top: 80px; min-height: 90vh; }
+/* 2. Regra Específica: Mobile (Telas menores que 991px) */
+@media (max-width: 991px) {
+  section {
+    padding: 30px 0 !important; /* Espaço bem pequeno entre seções */
+    display: block; /* Evita que o flexbox force alturas estranhas */
+  }
 
-/* Correção para evitar barras de rolagem horizontais fantasmas */
+  /* Remove alturas mínimas que criam buracos vazios */
+  #contato, #vitrine, #about, #home {
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  /* Ajustes específicos para "puxar" as seções para cima */
+  #about { 
+    padding-bottom: 20px !important; 
+  }
+  
+  #vitrine { 
+    padding-top: 10px !important; 
+  }
+
+
+  /* Ajuste de margens de títulos no mobile */
+  .display-1 { font-size: 2.2rem !important; }
+  h2 { margin-bottom: 20px !important; }
+  
+  /* Diminuir espaço da foto no sobre mim */
+  .about-photo-round {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 15px;
+  }
+}
+
+/* 3. Ajuste da Home (Desktop vs Mobile) */
+#home {
+  padding-top: 120px !important;
+}
+
+@media (min-width: 992px) {
+  #home {
+    min-height: 100vh !important;
+  }
+}
+
+@media (max-width: 991px) {
+  #home {
+    padding-top: 100px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
+/* 4. Correção de Reset de Margens */
 .row {
-    margin-right: 0;
-    margin-left: 0;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
 }
 
+/* Remove margens chatas que o Bootstrap coloca em parágrafos */
+p {
+  margin-bottom: 1rem;
+}
+/* Correção para evitar barras de rolagem horizontais fantasmas */
 /* --- BACKGROUND NEBULOSO --- */
 .main-layout {
   min-height: 100vh;
@@ -310,5 +364,65 @@ section {
   #about { text-align: center; }
   .about-photo-round { width: 220px; height: 220px; margin-bottom: 20px; }
   .about-text { margin-right: 0; }
-  section { padding: 80px 0; }
+  section { padding: 0px; }
 }   
+/* --- ADICIONE OU SUBSTITUA NO APP.CSS --- */
+
+/* Ajuste na Navbar para Mobile */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background: rgba(8, 8, 33, 0.95);
+    backdrop-filter: blur(20px);
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+  }
+  
+  .nav-link-custom {
+    padding: 15px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-link-custom.active::after {
+    display: none; /* Remove a linha embaixo no mobile para não poluir */
+  }
+}
+
+/* Hero Section Responsiva */
+@media (max-width: 708px) {
+  #home {
+    padding-top: 100px; /* Dá espaço para a navbar fixa */
+    text-align: center;
+  }
+
+  .display-1 {
+    font-size: 2.5rem; /* Força um tamanho menor em celulares pequenos */
+  }
+
+  .hero-subtitle {
+    margin: 20px auto;
+    font-size: 0.95rem;
+  }
+
+  .d-flex.gap-4 {
+    justify-content: center; /* Centraliza ícones sociais */
+  }
+
+  .badge-ready {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Ajuste de Seções */
+@media (max-width: 576px) {
+  section {
+    padding: 40px 1px; /* Reduz padding lateral e vertical */
+  }
+  
+  .tech-tag-large {
+    padding: 15px 25px;
+    font-size: 0.9rem;
+  }
+}

@@ -9,8 +9,6 @@ const CertificateCard = ({ title, issuer, date, image, thumbnail }) => {
   // Verifica se o arquivo principal é PDF
   const isPDF = image?.toLowerCase().endsWith('.pdf');
 
-  // Define qual imagem aparecerá no fundo do CARD
-  // Prioridade: 1º Thumbnail fornecida | 2º A própria imagem (se não for PDF)
   const displayThumbnail = thumbnail || (!isPDF ? image : null);
 
   return (

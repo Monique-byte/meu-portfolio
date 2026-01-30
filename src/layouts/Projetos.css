@@ -1,0 +1,118 @@
+.projects-section {
+    background-color: transparent;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(108, 92, 231, 0.4);
+}
+
+.project-header {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.project-img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.project-body {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-title {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.project-desc {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.tag-badge {
+    background: rgba(108, 92, 231, 0.1);
+    color: #a29bfe;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.project-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-link {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.details-link:hover {
+    color: #fff;
+}
+
+.btn-access {
+    background: #6c5ce7;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn-access:hover {
+    background: #5b4cc4;
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+}
+
+/* Customização das setas e paginação do Swiper */
+.swiper-button-next, .swiper-button-prev {
+    color: #6c5ce7 !important;
+}
+
+.swiper-pagination-bullet {
+    background: #64748b !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #6c5ce7 !important;
+}

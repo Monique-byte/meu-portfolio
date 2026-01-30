@@ -108,8 +108,8 @@ const App = () => {
             </nav>
 
             {/* SEÇÃO HOME */}
-            <section id="home" className="container vh-100 d-flex align-items-center">
-              <div className="row align-items-center w-100 mt-5">
+            <section id="home" className="container d-flex align-items-center">
+                <div className="row align-items-center w-100"> 
                 <div className="col-lg-7">
                   <motion.div variants={itemVariants}>
                     <div className="badge-ready">✨ Formada em Análise e Desenvolvimento de Sistemas </div>
@@ -142,18 +142,18 @@ const App = () => {
                   </motion.div>
                 </div>
               </div>
-              <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity }} className="scroll-indicator">
+              {/* d-none esconde no mobile, d-md-block mostra do tablet em diante */}
+              <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity }} className="scroll-indicator d-none d-md-block">
                 <ChevronDown />
               </motion.div>
             </section>
-            
-            {/* SEÇÃO SOBRE */}
-            <section id="about" className="container py-80">
+
+            <section id="about" className="container">
               <div className="row align-items-center">
                 <div className="col-lg-3 col-md-12 text-center mb-5 mb-lg-0">
                   <motion.div whileInView={{ scale: [0.9, 1], opacity: [0, 1] }} viewport={{ once: true }}>
                     <div className="photo-container">
-                      <img src="/eu.jpeg" alt="Monique Trindade" loading="eager"  fetchpriority="high" className="about-photo-round" />
+                      <img src="/eu.jpeg" alt="Monique Trindade" loading="eager"  fetchPriority="high" className="about-photo-round" />
                       <div className="photo-glow"></div>
                     </div>
                   </motion.div>

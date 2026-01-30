@@ -1,191 +1,307 @@
-/* contato.css */
-
+/* ============================================================
+   1. LAYOUT BASE & SEÇÃO
+   ============================================================ */
 .contact-section {
-    padding-top: 120px;
-    padding-bottom: 100px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    color: #fff;
 }
 
-.badge-contact {
-    background: rgba(108, 92, 231, 0.1);
-    color: var(--purple-light);
-    border: 1px solid rgba(108, 92, 231, 0.3);
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+.main-title {
+    background: linear-gradient(to right, #fff, #a29bfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* Cards de Informação */
-.contact-glass-card {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 25px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
+/* ============================================================
+   2. CONTAINERS (GLASSMORPHISM)
+   ============================================================ */
+.form-glass-container {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    padding: 30px !important; /* Espaçamento interno do card */
 }
 
-.contact-glass-card:hover {
-    border-color: var(--purple-main);
-    transform: translateX(10px);
+/* ============================================================
+   3. SELETOR DE INTENÇÃO (TOGGLE)
+   ============================================================ */
+.intent-toggle-container {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px;
+    border-radius: 14px;
+    gap: 6px;
+    margin-bottom: 25px;
 }
 
-.icon-box {
-    width: 50px;
-    height: 50px;
-    background: var(--purple-main);
-    border-radius: 12px;
+.intent-option {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    box-shadow: 0 8px 15px rgba(108, 92, 231, 0.3);
-}
-
-.contact-glass-card h5 {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0;
-}
-
-.contact-glass-card p {
-    margin: 0;
-    font-weight: 600;
-    color: white;
-}
-
-/* --- GRID SOCIAL (AJUSTADO PARA RESPONSIVIDADE) --- */
-.social-grid-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--glass-border);
-    padding: 25px;
-    border-radius: 20px;
-}
-
-/* Esta é a div que envolve os links no seu JSX */
-.social-grid-card .d-flex {
-    flex-wrap: wrap; /* Permite que os botões pulem linha no celular */
-    gap: 12px !important; /* Espaço entre as pílulas */
-}
-
-.social-pill {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
     gap: 8px;
-    transition: 0.3s;
-    white-space: nowrap; /* Impede que o texto quebre dentro da pílula */
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #94a3b8;
+    font-weight: 500;
+    font-size: 0.85rem;
 }
 
-.social-pill:hover {
-    background: var(--purple-main);
+.intent-option:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.intent-option.active {
+    background: #6c5ce7;
     color: white;
-    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(108, 92, 231, 0.3);
 }
 
-/* --- FORMULÁRIO PROFISSIONAL --- */
-.form-glass-container {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 40px;
-    border-radius: 30px;
-    backdrop-filter: blur(15px);
-}
-
-.input-group-custom {
+/* ============================================================
+   4. CAMPOS DE ENTRADA (WRAPPERS, LABELS, INPUTS)
+   ============================================================ */
+.input-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 15px;
 }
 
-.input-group-custom label {
-    font-size: 0.8rem;
+.input-wrapper label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #94a3b8;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
-    margin-left: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
 }
 
-.input-group-custom input, 
-.input-group-custom textarea {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--glass-border);
-    padding: 12px 20px;
-    border-radius: 15px;
-    color: white;
+.input-wrapper input, 
+.input-wrapper textarea, 
+.input-wrapper .custom-select {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #fff;
+    font-size: 0.9rem;
     outline: none;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    width: 100%;
 }
 
-.input-group-custom input:focus, 
-.input-group-custom textarea:focus {
-    border-color: var(--purple-main);
-    background: rgba(108, 92, 231, 0.05);
-    box-shadow: 0 0 20px rgba(108, 92, 231, 0.1);
+.input-wrapper input::placeholder,
+.input-wrapper textarea::placeholder {
+    color: #475569;
 }
 
-.btn-submit-contact {
-    background: var(--purple-main);
+.input-wrapper input:focus, 
+.input-wrapper textarea:focus,
+.input-wrapper .custom-select:focus {
+    border-color: #6c5ce7;
+    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+.input-wrapper textarea {
+    min-height: 90px;
+    resize: none;
+}
+
+/* Estilo do Select customizado */
+.custom-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.1em;
+    cursor: pointer;
+}
+
+/* ============================================================
+   5. BOTÃO DE ENVIO
+   ============================================================ */
+.btn-submit-main {
+    background: #6c5ce7;
     color: white;
     border: none;
-    padding: 14px 35px;
-    border-radius: 15px;
+    padding: 12px;
+    border-radius: 10px;
     font-weight: 700;
-    display: inline-flex;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    display: flex;
     align-items: center;
-    transition: 0.3s;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
 }
 
-.btn-submit-contact:hover {
-    background: var(--purple-light);
+.btn-submit-main:hover:not(:disabled) {
+    background: #5b4cc4;
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+    box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
 }
 
-/* --- VERSÃO MOBILE (AJUSTES FINAIS) --- */
+.btn-submit-main:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   6. COMPONENTES DE INFORMAÇÃO (ESQUERDA)
+   ============================================================ */
+.badge-contact {
+    background: rgba(108, 92, 231, 0.1);
+    color: #a29bfe;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border: 1px solid rgba(108, 92, 231, 0.2);
+}
+
+.social-pill-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: #e2e8f0;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.85rem;
+}
+
+.social-pill-link:hover {
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.4);
+    transform: translateX(4px);
+    color: #fff;
+}
+
+/* ============================================================
+   7. STATUS INDICATOR & ANIMAÇÕES
+   ============================================================ */
+.status-box {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    position: relative;
+}
+
+.pulsate::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* Erros de Validação */
+.input-wrapper input.error {
+    border-color: #ef4444;
+}
+
+.err-txt {
+    color: #ef4444;
+    font-size: 0.7rem;
+    margin-top: 2px;
+    font-weight: 500;
+}
+/* Aplica o espaço apenas em telas grandes (Desktop) */
+@media (min-width: 992px) {
+    #contato .row.justify-content-center {
+        /* Define a distância exata entre as colunas */
+        column-gap: 80px; 
+    }
+
+    /* Remove as margens negativas do Bootstrap que podem interferir no gap */
+    #contato .row.justify-content-center > div {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+/* --- ADICIONE OU SUBSTITUA NO CONTATO.CSS --- */
+
+@media (max-width: 991px) {
+  /* No mobile, as colunas já empilham via Bootstrap (col-lg-4/6), 
+     mas precisamos remover o gap customizado */
+  #contato .row.justify-content-center {
+    column-gap: 0; 
+  }
+
+  .info-container {
+    margin-bottom: 40px; /* Espaço entre o perfil e o formulário */
+  }
+}
+
 @media (max-width: 768px) {
-    .contact-section {
-        padding-top: 80px;
-    }
+  .form-glass-container {
+    padding: 20px !important;
+  }
 
-    /* Centraliza tudo no card de info */
-    .contact-glass-card {
-        text-align: center;
-    }
-    
-    .contact-glass-card .d-flex {
-        flex-direction: column; /* Ícone em cima do texto */
-        justify-content: center;
-    }
+  .intent-toggle-container {
+    flex-direction: column; /* Toggle vira vertical no celular */
+    padding: 8px;
+  }
 
-    .contact-glass-card:hover {
-        transform: translateY(-5px); /* Move para cima em vez de para o lado no mobile */
-    }
+  .intent-option {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
 
-    /* Centraliza as redes sociais */
-    .social-grid-card {
-        text-align: center;
-    }
+  /* Reduzir o tamanho do Radar Chart no mobile para não ocupar a tela toda */
+  .contact-glass-card div[style*="height: 250px"] {
+    height: 200px !important;
+  }
 
-    .social-grid-card .d-flex {
-        justify-content: center; /* Centraliza as pílulas */
-    }
+  .social-grid-card .d-grid {
+    gap: 10px;
+  }
 
-    .form-glass-container {
-        padding: 25px;
-        margin-top: 20px;
-    }
+  .social-pill-link {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+  
+  .social-pill-link span {
+    display: none; /* Esconde o texto longo (/in/monique...) no mobile */
+  }
+}
 
-    .btn-submit-contact {
-        width: 100%; /* Botão ocupa a largura toda no celular */
-        justify-content: center;
-    }
+/* Estilo para garantir que o Radar Chart não quebre o layout */
+.recharts-responsive-container {
+  min-width: 0;
 }
