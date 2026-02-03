@@ -244,7 +244,7 @@ const PortfolioShowcase = () => {
       description: "Plataforma que conecta abrigos de animais com potenciais adotantes.",
       tech: "HTML, CSS & JavaScript",
       image: "/PetDot.png",
-      linkDemo: "#",
+      linkDemo: "https://novo-pet-dot.vercel.app/",
       details: {
         journey: `O PetDot foi desenvolvido para ajudar abrigos de animais a conectarem-se com potenciais adotantes. O desafio principal foi criar uma interface intuitiva e responsiva que permitisse aos usuários navegar por perfis de animais disponíveis, visualizar fotos e informações detalhadas, e entrar em contato com os abrigos. A plataforma foi pensada para facilitar o processo de adoção, promovendo o bem-estar animal e ajudando a encontrar lares amorosos para pets necessitados.`
       }

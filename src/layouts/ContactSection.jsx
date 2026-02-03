@@ -75,7 +75,7 @@ const onSubmit = async (data) => {
       intent_label: data.intent === 'recruitment' ? 'Recrutamento' : 'Freelance',
       empresa: data.empresa || "N/A",
       linkedinVaga: data.linkedinVaga || "N/A",
-      orcamento_text: data.orcamento === 'p' ? 'Até R$ 1k' : data.orcamento === 'm' ? 'R$ 2k - 5k' : '10k+',
+      orcamento_text: data.orcamento || "Não informado",
       prazo: data.prazo || "N/A",
       mensagem: data.mensagem
     };
